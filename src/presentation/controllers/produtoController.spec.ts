@@ -9,7 +9,7 @@ describe('Produto Controller', () => {
         body: {
           nome: 'any_produto',
           // preco: 'any_preco',
-          // id_categoria: 'any_id',
+          id_categoria: 'any_id',
           url_imagem: 'any_url'
           // descricao: 'any_descricao',
         }

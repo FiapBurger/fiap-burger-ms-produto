@@ -1,6 +1,6 @@
 import Joi from 'joi'
 
-export const reqProdutoSchema = Joi.object({
+export const produtoSchema = Joi.object({
   nome: Joi.string().required(),
   preco: Joi.string().required(),
   id_categoria: Joi.string().required(),

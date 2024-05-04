@@ -2,16 +2,16 @@ import { ProdutoController } from './produtoController'
 
 describe('Produto Controller', () => {
   describe('Salvar produto', () => {
-    test('deve retornar 400 se os campos obrigatórios estiverem faltando', () => {
+    test('Deve retornar 400 se os campos obrigatórios estiverem faltando', () => {
       // Arrive
       const sut = new ProdutoController()
       const httpRequest = {
         body: {
           nome: 'any_produto',
-          // preco: 'any_preco',
+          // preco: 'item-obrigatorio',
           id_categoria: 'any_id',
-          url_imagem: 'any_url'
-          // descricao: 'any_descricao',
+          url_imagem: 'any_url',
+          descricao: 'any_descricao'
         }
       }
 
@@ -20,6 +20,7 @@ describe('Produto Controller', () => {
 
       // Asset
       expect(httpResponse.statusCode).toBe(400)
+      expect(httpResponse.body).toEqual(new Error('Campo obrigatorio: preco'))
     })
   })
 })

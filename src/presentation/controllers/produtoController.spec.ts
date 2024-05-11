@@ -1,7 +1,6 @@
 import { ProdutoController } from './produtoController'
 import { type HttpRequest } from '../protocols/http'
 import { MissingParamError, ServerError } from '../errors/errors'
-import { produtoSchema } from '../../resources/schemas/request-produto-schema'
 import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/usecases/cadastro-produto'
 import { type ProdutoModel } from '../../domain/models/produto'
 
@@ -18,8 +17,8 @@ const makeSut = (): SutTypes => {
 
 const makeCadastraProdutoStub = (): CadastroProduto => {
   class CadastraProdutoStub implements CadastroProduto {
-    cadastrar (produto: CadastraProdutoModel): ProdutoModel {
-      return {
+    async cadastrar (produto: CadastraProdutoModel): Promise<ProdutoModel> {
+      const fakeCadastro = {
         id: produto.id_categoria || 'id_valido',
         nome: produto.nome || 'nome_valido',
         preco: produto.preco || 'preco_valido',
@@ -27,6 +26,7 @@ const makeCadastraProdutoStub = (): CadastroProduto => {
         url_imagem: produto.url_imagem || 'url_imagem_valido',
         descricao: produto.descricao ?? 'descricao_any'
       }
+      return await new Promise(resolve => { resolve(fakeCadastro) })
     }
   }
   return new CadastraProdutoStub()
@@ -38,7 +38,7 @@ describe('Produto Controller', () => {
       jest.restoreAllMocks()
     })
 
-    test('Deve retornar 400 se algum campo obrigatórios estiverem faltando', () => {
+    test('Deve retornar 400 se algum campo obrigatórios estiverem faltando', async () => {
       const { sut } = makeSut()
       const httpRequest: HttpRequest = {
         body: {
@@ -50,35 +50,31 @@ describe('Produto Controller', () => {
         }
       }
 
-      const httpResponse = sut.handle(httpRequest)
+      const httpResponse = await sut.handle(httpRequest)
 
       expect(httpResponse.statusCode).toBe(400)
       expect(httpResponse.body).toEqual(new MissingParamError('preco'))
     })
 
-    test('Deve retornar 500 ProdutoController lancar excessao ', () => {
+    test('Deve retornar 400 se um tipo de dado inesperado for fornecido', async () => {
       const { sut } = makeSut()
       const httpRequest: HttpRequest = {
         body: {
           nome: 'any_produto',
-          // preco: 'item_obrigatorio',
+          preco: 100,
           id_categoria: 'any_id',
           url_imagem: 'any_url',
           descricao: 'any_descricao'
         }
       }
 
-      const validateSpy: jest.SpyInstance = jest.spyOn(produtoSchema, 'validate')
-      validateSpy.mockImplementation(() => {
-        throw new ServerError()
-      })
+      const httpResponse = await sut.handle(httpRequest)
 
-      const httpResponse = sut.handle(httpRequest)
-      expect(httpResponse.statusCode).toBe(500)
-      expect(httpResponse.body).toEqual('Erro interno no servidor')
+      expect(httpResponse.statusCode).toBe(400)
+      expect(httpResponse.body).toEqual(new MissingParamError('preco'))
     })
 
-    test('Deve retornar 201 se os dados forem providenciados', () => {
+    test('Deve retornar 201 se os dados forem providenciados', async () => {
       const { sut } = makeSut()
       const httpRequest = {
         body: {
@@ -89,13 +85,13 @@ describe('Produto Controller', () => {
           descricao: 'any_descricao'
         }
       }
-      const httpResponse = sut.handle(httpRequest)
+      const httpResponse = await sut.handle(httpRequest)
 
       expect(httpResponse.statusCode).toBe(201)
       expect(httpResponse.body).toEqual('Produto cadastrado com sucesso!')
     })
 
-    test('Deve chamar CadastroProduto com os valores corretos', () => {
+    test('Deve chamar CadastroProduto com os valores corretos', async () => {
       const { sut, cadastrarStub } = makeSut()
       const cadastrarSpy = jest.spyOn(cadastrarStub, 'cadastrar')
       const httpRequest = {
@@ -108,7 +104,7 @@ describe('Produto Controller', () => {
         }
       }
 
-      sut.handle(httpRequest)
+      await sut.handle(httpRequest)
       expect(cadastrarSpy).toHaveBeenCalledWith({
         nome: 'any_produto',
         preco: 'any_preco',
@@ -118,10 +114,10 @@ describe('Produto Controller', () => {
       })
     })
 
-    test('Deve retornar 500 se CadastroProduto lancar excessao ', () => {
+    test('Deve retornar 500 se CadastroProduto lancar excessao ', async () => {
       const { sut, cadastrarStub } = makeSut()
-      jest.spyOn(cadastrarStub, 'cadastrar').mockImplementationOnce(() => {
-        throw new ServerError()
+      jest.spyOn(cadastrarStub, 'cadastrar').mockImplementationOnce(async () => {
+        return await new Promise((resolve, reject) => { reject(new ServerError()) })
       })
       const httpRequest = {
         body: {
@@ -132,7 +128,7 @@ describe('Produto Controller', () => {
           descricao: 'any_descricao'
         }
       }
-      const httpResponse = sut.handle(httpRequest)
+      const httpResponse = await sut.handle(httpRequest)
       expect(httpResponse.statusCode).toBe(500)
       expect(httpResponse.body).toEqual('Erro interno no servidor')
     })

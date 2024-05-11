@@ -12,22 +12,22 @@ export class ProdutoController implements Controller {
     this.cadastraProduto = cadastraProduto
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { error } = produtoSchema.validate(httpRequest.body)
-      if (error) {
-        return badRequest(new MissingParamError(`${error.details['0'].path['0']}`))
-      }
-      const { nome, preco, id_categoria, url_imagem, descricao } = httpRequest.body
-      this.cadastraProduto.cadastrar({
+      const { nome, preco, id_categoria, url_imagem, descricao } = await produtoSchema.validateAsync(httpRequest.body)
+      return await this.cadastraProduto.cadastrar({
         nome,
         preco,
         id_categoria,
         url_imagem,
         descricao
+      }).then(() => {
+        return created('Produto cadastrado com sucesso!')
       })
-      return created('Produto cadastrado com sucesso!')
     } catch (e) {
+      if (e.isJoi) {
+        return badRequest(new MissingParamError(e.details['0'].path['0']))
+      }
       return internalServerError(new ServerError())
     }
   }

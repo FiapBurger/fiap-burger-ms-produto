@@ -9,5 +9,5 @@ export interface CadastraProdutoModel {
 }
 
 export interface CadastroProduto {
-  cadastrar: (produto: CadastraProdutoModel) => ProdutoModel
+  cadastrar: (produto: CadastraProdutoModel) => Promise<ProdutoModel>
 }

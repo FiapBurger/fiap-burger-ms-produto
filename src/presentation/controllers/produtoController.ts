@@ -18,7 +18,14 @@ export class ProdutoController implements Controller {
       if (error) {
         return badRequest(new MissingParamError(`${error.details['0'].path['0']}`))
       }
-      this.cadastraProduto.cadastrar(httpRequest.body)
+      const { nome, preco, id_categoria, url_imagem, descricao } = httpRequest.body
+      this.cadastraProduto.cadastrar({
+        nome,
+        preco,
+        id_categoria,
+        url_imagem,
+        descricao
+      })
       return created('Produto cadastrado com sucesso!')
     } catch (e) {
       return internalServerError(new ServerError())

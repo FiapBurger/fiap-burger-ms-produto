@@ -9,6 +9,10 @@
     "allowJs": true,
     "strictNullChecks": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "jest-integration.config.ts",
+    "jest-unit.config.ts"
+  ],
   "exclude": ["node_modules"]
 }

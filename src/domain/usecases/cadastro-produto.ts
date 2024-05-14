@@ -1,6 +1,7 @@
 import { type ProdutoModel } from '../models/produto'
 
 export interface CadastraProdutoModel {
+  id?: string
   nome: string
   preco: string
   id_categoria: string

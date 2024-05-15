@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
-    "test:staged": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --passWithNoTests",
+    "test:unit": "npm test -- --watchAll -c jest-unit.config.ts",
+    "test:integration": "npm test -- --watch -c jest-integration.config.ts",
+    "test:staged": "npm test --findRelatedTests",
+    "test:ci": "npm test -- --coverage",
     "setup-hooks": "husky install"
   },
   "repository": {
@@ -16,6 +20,7 @@
   "author": "Alex Cesar Nascimento",
   "license": "ISC",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^3.0.2",
     "@types/jest": "23.3.12",
     "@types/node": "^20.12.8",
     "@typescript-eslint/eslint-plugin": "^5.62.0",

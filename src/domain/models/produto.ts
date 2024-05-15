@@ -1,5 +1,5 @@
 export interface ProdutoModel {
-  id?: string
+  id: string
   nome: string
   preco: string
   id_categoria: string

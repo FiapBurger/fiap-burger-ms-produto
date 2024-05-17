@@ -19,6 +19,7 @@ const makeCadastraProdutoStub = (): CadastroProduto => {
   class CadastraProdutoStub implements CadastroProduto {
     async cadastrar (produto: CadastraProdutoModel): Promise<ProdutoModel> {
       const fakeCadastro = {
+        id: 'id',
         nome: produto.nome || 'nome_valido',
         preco: produto.preco || 'preco_valido',
         id_categoria: produto.id_categoria || 'id_categoria_valido',

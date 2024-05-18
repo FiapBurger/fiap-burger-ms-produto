@@ -10,10 +10,11 @@
     "strictNullChecks": true
   },
   "include": [
-    "src/**/*",
-    "jest-integration.config.ts",
-    "jest-unit.config.ts",
-    "jest-mongodb.config.ts"
+    "src"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

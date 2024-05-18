@@ -1,10 +1,25 @@
 import request from 'supertest'
 import app from '../config/app'
+import { MongoHelper } from '../../db/mongodb/helpers/mongo-helper'
+import { env } from '../../../environments/environment'
 
 describe('Produto Routes', () => {
+  beforeAll(async () => {
+    await MongoHelper.connection(`${env.mongoUrl}`)
+  })
+
+  afterAll(async () => {
+    await MongoHelper.disconnect()
+  })
+
+  beforeEach(async () => {
+    const produtoCollection = MongoHelper.getCollection('produtos')
+    await produtoCollection.deleteMany({})
+  })
+
   test('Devera retornar um produto em caso de sucesso', async () => {
     await request(app)
-      .post('/produto')
+      .post('/produtos')
       .send({
         nome: 'nome_valido',
         preco: 'preco_valido',

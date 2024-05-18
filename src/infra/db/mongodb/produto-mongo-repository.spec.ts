@@ -1,5 +1,6 @@
 import { ProdutoMongoRepository } from './produto-mongo-repository'
 import { MongoHelper } from './helpers/mongo-helper'
+import { env } from '../../../environments/environment'
 
 describe('Produto Mongo Repository', () => {
   interface SutTypes {
@@ -7,11 +8,16 @@ describe('Produto Mongo Repository', () => {
   }
 
   beforeAll(async () => {
-    await MongoHelper.connection(global.__MONGO_URI__)
+    await MongoHelper.connection(env.mongoUrl)
   })
 
   afterAll(async () => {
     await MongoHelper.disconnect()
+  })
+
+  beforeEach(async () => {
+    const produtoCollection = MongoHelper.getCollection('produtos')
+    await produtoCollection.deleteMany({})
   })
 
   const makeSut = (): SutTypes => {

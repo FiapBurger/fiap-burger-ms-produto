@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
-    "outDir":"./dist",
+    "outDir": "dist",
     "module": "commonjs",
-    "lib": ["es6", "dom"],
-    "types": ["jest"],
     "target": "es2019",
+    "strict": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowJs": true,
-    "strictNullChecks": true
+    "sourceMap": false,
+    "rootDirs": ["src", "tests"],
+    "baseUrl": "src",
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src", "tests"],
   "exclude": [
     "node_modules",
     "**/*.spec.ts",

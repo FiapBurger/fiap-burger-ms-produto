@@ -7,8 +7,9 @@ export class ProdutoMongoRepository implements CadastraProdutoRepository {
   async cadastrar (produtoData: CadastraProdutoModel): Promise<ProdutoModel> {
     const produtoCollection = MongoHelper.getCollection('produtos')
     const result = await produtoCollection.insertOne(produtoData)
-    const produto = result.ops[0]
-    const { _id, ...produtoSemId } = produto
-    return Object.assign({}, produtoSemId, { id: _id }) as ProdutoModel
+    const insertedProduto = await produtoCollection.findOne({
+      _id: result.insertedId
+    })
+    return MongoHelper.map(insertedProduto)
   }
 }

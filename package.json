@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/infra/http/server.js",
     "dev": "sucrase-node src/infra/http/server.ts",
+    "up": "npm run build && docker-compose up",
     "build": "rimraf dist && tsc",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests",
@@ -51,7 +52,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "joi": "^17.13.1",
-    "mongodb": "^4.1.1"
+    "mongodb": "^4.0.1"
   },
   "engines": {
     "node": "14.17.3",

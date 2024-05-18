@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo-container
+    image: mongo:4
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  api:
+    container_name: api-container-produto
+    build: .
+    image: api-produto-node
+    restart: always
+    command: npm start
+    volumes:
+      - ./dist/:/usr/src/fiap-burger-ms-produto/dist/
+    ports:
+      - "5050:5050"
+    links:
+      - mongo
+
+
+#    working_dir: /usr/src/fiap-burger-ms-produto
+#    environment:
+#      - MONGO_URL=mongodb://mongo:27017/produto-mongo-db
+#    volumes:
+#      - ./dist/:/usr/src/fiap-burger-ms-produto/dist/
+#      - ./package.json:/usr/src/fiap-burger-ms-produto/package.json
+

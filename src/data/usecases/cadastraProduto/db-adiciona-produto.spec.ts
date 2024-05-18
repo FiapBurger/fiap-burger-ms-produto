@@ -1,17 +1,17 @@
-import { DbProduto } from './db-produto'
+import { DbAdicionaProduto } from './db-adiciona-produto'
 import { type ProdutoModel } from '../../../domain/models/produto'
 import { type CadastraProdutoModel } from '../../../domain/usecases/cadastro-produto'
 import { type CadastraProdutoRepository } from '../protocols/cadastra-produto-repository'
 
-describe('DbProduto UseCase', () => {
+describe('DbAdicionaProduto UseCase', () => {
   interface SutTypes {
-    sut: DbProduto
+    sut: DbAdicionaProduto
     cadastraProdutoRepositoryStub: CadastraProdutoRepository
   }
 
   const makeSut = (): SutTypes => {
     const cadastraProdutoRepositoryStub = makeCadastraProdutoRepository()
-    const sut = new DbProduto(cadastraProdutoRepositoryStub)
+    const sut = new DbAdicionaProduto(cadastraProdutoRepositoryStub)
     return { sut, cadastraProdutoRepositoryStub }
   }
 

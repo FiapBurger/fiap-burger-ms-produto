@@ -1,11 +1,10 @@
 import request from 'supertest'
 import app from '../config/app'
 import { MongoHelper } from '../../db/mongodb/helpers/mongo-helper'
-import { env } from '../../../environments/environment'
 
 describe('Produto Routes', () => {
   beforeAll(async () => {
-    await MongoHelper.connection(`${env.mongoUrl}`)
+    await MongoHelper.connection(process.env.MONGO_URL)
   })
 
   afterAll(async () => {
@@ -27,6 +26,6 @@ describe('Produto Routes', () => {
         url_imagem: 'url_imagem_valido',
         descricao: 'descricao_any'
       })
-      .expect(200)
+      .expect(201)
   })
 })

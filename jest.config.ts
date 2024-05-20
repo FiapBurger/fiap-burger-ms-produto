@@ -9,7 +9,11 @@ const config: Config = {
   preset: '@shelf/jest-mongodb',
   transform: {
     '.+\\.ts$': 'ts-jest'
-  }
+  },
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/protocols/'
+  ]
 }
 
 export default config

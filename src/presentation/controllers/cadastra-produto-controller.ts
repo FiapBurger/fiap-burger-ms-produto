@@ -5,7 +5,7 @@ import { MissingParamError, ServerError } from '../errors/errors'
 import { type Controller } from '../protocols/controller'
 import { type CadastroProduto } from '../../domain/usecases/cadastro-produto'
 
-export class ProdutoController implements Controller {
+export class CadastraProdutoController implements Controller {
   private readonly cadastraProduto: CadastroProduto
 
   constructor (cadastraProduto: CadastroProduto) {

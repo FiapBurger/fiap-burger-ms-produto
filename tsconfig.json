@@ -7,13 +7,12 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "sourceMap": false,
-    "rootDirs": ["src", "tests"],
     "baseUrl": "src",
+    "rootDir": "./src"
   },
   "include": ["src", "tests"],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts",
-    "**/*.test.ts"
   ]
 }
+

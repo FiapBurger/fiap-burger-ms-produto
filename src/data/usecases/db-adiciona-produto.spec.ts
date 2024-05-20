@@ -1,7 +1,7 @@
 import { DbAdicionaProduto } from './db-adiciona-produto'
-import { type ProdutoModel } from '../../../domain/models/produto'
-import { type CadastraProdutoModel } from '../../../domain/usecases/cadastro-produto'
-import { type CadastraProdutoRepository } from '../protocols/cadastra-produto-repository'
+import { type ProdutoModel } from '../../domain/models/produto'
+import { type CadastraProdutoModel } from '../../domain/usecases/cadastro-produto'
+import { type CadastraProdutoRepository } from './protocols/cadastra-produto-repository'
 
 describe('DbAdicionaProduto UseCase', () => {
   interface SutTypes {

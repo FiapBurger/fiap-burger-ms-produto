@@ -1,6 +1,6 @@
-import { type CadastraProdutoModel, type CadastroProduto } from '../../../domain/usecases/cadastro-produto'
-import { type ProdutoModel } from '../../../domain/models/produto'
-import { type CadastraProdutoRepository } from '../protocols/cadastra-produto-repository'
+import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/usecases/cadastro-produto'
+import { type ProdutoModel } from '../../domain/models/produto'
+import { type CadastraProdutoRepository } from './protocols/cadastra-produto-repository'
 
 export class DbAdicionaProduto implements CadastroProduto {
   private readonly cadastraProdutoRepository: CadastraProdutoRepository

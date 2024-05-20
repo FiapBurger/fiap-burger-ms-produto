@@ -1,17 +1,17 @@
-import { ProdutoController } from './produtoController'
+import { CadastraProdutoController } from './cadastra-produto-controller'
 import { type HttpRequest } from '../protocols/http'
 import { MissingParamError, ServerError } from '../errors/errors'
 import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/usecases/cadastro-produto'
 import { type ProdutoModel } from '../../domain/models/produto'
 
 interface SutTypes {
-  sut: ProdutoController
+  sut: CadastraProdutoController
   cadastrarStub: CadastroProduto
 }
 
 const makeSut = (): SutTypes => {
   const cadastrarStub = makeCadastraProdutoStub()
-  const sut = new ProdutoController(cadastrarStub)
+  const sut = new CadastraProdutoController(cadastrarStub)
   return { sut, cadastrarStub }
 }
 

@@ -12,16 +12,16 @@
   },
   "include": [
     "src",
-    "jest.config.ts",
-    "tests",
     "tests/features/steps/**/*.ts",
     "./config/**/*",
     "./features/**/*",
     "./pageObjects/**/*",
     "./setup/**/*",
-    "./stepDefinations/**/*"
+    "./stepDefinations/**/*",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "jest.config.ts",
+    "tests"
   ]
 }

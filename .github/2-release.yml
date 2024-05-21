@@ -1,0 +1,41 @@
+name: Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+      - name: Install kubectl
+        run: |
+          sudo apt-get update && sudo apt-get install -y kubectl 
+
+      - name: Configure kubeconfig for EKS cluster
+        run: |
+          aws eks update-kubeconfig --name fiap-burger-eks-cluster --region us-east-1
+
+      - name: Deploy resources
+        run: |
+          kubectl apply -f kubernetes/constantes.configmap.yaml
+          kubectl apply -f kubernetes/postgres-sql.configmap.yaml
+          kubectl apply -f kubernetes/db-login.secrets.yaml
+          kubectl apply -f kubernetes/fiap-burger.svc.yaml
+          kubectl apply -f kubernetes/postgres.svc.yaml
+          kubectl apply -f kubernetes/postgres.deployment.yaml
+          kubectl apply -f kubernetes/fiap-burger.deployment.yaml
+          kubectl apply -f kubernetes/fiap-burger.hpa.yaml

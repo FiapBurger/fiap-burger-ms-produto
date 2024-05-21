@@ -1,7 +1,7 @@
 import { CadastraProdutoController } from './cadastra-produto-controller'
 import { type HttpRequest } from '../protocols/http'
 import { MissingParamError, ServerError } from '../errors/errors'
-import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/usecases/cadastro-produto'
+import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/interfaces/cadastro-produto'
 import { type ProdutoModel } from '../../domain/models/produto'
 
 interface SutTypes {

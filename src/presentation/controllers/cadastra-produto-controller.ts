@@ -3,7 +3,7 @@ import { type HttpRequest, type HttpResponse } from '../protocols/http'
 import { badRequest, created, internalServerError } from '../helpers/http-helper'
 import { MissingParamError, ServerError } from '../errors/errors'
 import { type Controller } from '../protocols/controller'
-import { type CadastroProduto } from '../../domain/usecases/cadastro-produto'
+import { type CadastroProduto } from '../../domain/interfaces/cadastro-produto'
 
 export class CadastraProdutoController implements Controller {
   private readonly cadastraProduto: CadastroProduto

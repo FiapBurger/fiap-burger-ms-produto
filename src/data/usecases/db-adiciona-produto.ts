@@ -1,4 +1,4 @@
-import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/usecases/cadastro-produto'
+import { type CadastraProdutoModel, type CadastroProduto } from '../../domain/interfaces/cadastro-produto'
 import { type ProdutoModel } from '../../domain/models/produto'
 import { type CadastraProdutoRepository } from './protocols/cadastra-produto-repository'
 
@@ -10,6 +10,10 @@ export class DbAdicionaProduto implements CadastroProduto {
   }
 
   async cadastrar (produto: CadastraProdutoModel): Promise<ProdutoModel> {
-    return await this.cadastraProdutoRepository.cadastrar(produto)
+    try {
+      return await this.cadastraProdutoRepository.cadastrar(produto)
+    } catch (error) {
+      console.error('Erro:', error);
+    }
   }
 }

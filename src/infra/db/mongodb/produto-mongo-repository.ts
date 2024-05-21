@@ -1,5 +1,5 @@
 import { type CadastraProdutoRepository } from '../../../data/usecases/protocols/cadastra-produto-repository'
-import { type CadastraProdutoModel } from '../../../domain/usecases/cadastro-produto'
+import { type CadastraProdutoModel } from '../../../domain/interfaces/cadastro-produto'
 import { type ProdutoModel } from '../../../domain/models/produto'
 import { MongoHelper } from './helpers/mongo-helper'
 

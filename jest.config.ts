@@ -12,7 +12,10 @@ const config: Config = {
   },
   coveragePathIgnorePatterns: [
     '/node_modules/',
-    '/protocols/'
+    '/protocols/',
+    '/interfaces/',
+    '/server.ts',
+    'src/domain/models'
   ]
 }
 

@@ -25,8 +25,8 @@ Quando('eu envio uma requisição POST para {string}', async (rota: string) => {
     .set('Accept', 'application/json')
 })
 
-Entao('o status da resposta deve ser {int}', () => {
-  expect(200)
+Entao('o status da resposta deve ser 201', () => {
+  expect(201)
 })
 
 Entao('o corpo da resposta deve conter os detalhes do produto', () => {

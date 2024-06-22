@@ -5,6 +5,7 @@ export class GetProductByIdUseCase {
   constructor (private readonly productRepository: ProductRepository) {}
 
   async execute (id: string): Promise<Product | null> {
+    console.log('[2] - usecase chama repository')
     return await this.productRepository.getProductById(id)
   }
 }

@@ -1,8 +1,8 @@
 import { type HttpResponse } from '../controllers/interface/http.interface'
 
-export const badRequest = (error: Error): HttpResponse => ({
+export const badRequest = (error?: Error): HttpResponse => ({
   statusCode: 400,
-  body: error
+  body: new Error()
 })
 
 export const forbidden = (error: Error): HttpResponse => ({

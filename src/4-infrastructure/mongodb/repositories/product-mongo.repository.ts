@@ -25,4 +25,29 @@ export class ProductMongoRepository implements ProductRepository {
     const foundProduct = await productCollection.findOne({ _id: new ObjectId(id) })
     return foundProduct && MongoHelper.map(foundProduct)
   }
+
+  async getAllProducts (): Promise<Product[]> {
+    const productCollection = MongoHelper.getCollection('produtos')
+    const products = await productCollection.find().toArray()
+    return products.map(product => MongoHelper.map(product))
+  }
+
+  async updateProduct (id: string, productData: ProductDTO): Promise<void> {
+    const productCollection = MongoHelper.getCollection('produtos')
+    await productCollection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: productData }
+    )
+  }
+
+  async deleteProduct (id: string): Promise<void> {
+    const productCollection = MongoHelper.getCollection('produtos')
+    await productCollection.deleteOne({ _id: new ObjectId(id) })
+  }
+
+  async getProductsByCategory (categoryId: string): Promise<Product[]> {
+    const productCollection = MongoHelper.getCollection('produtos')
+    const products = await productCollection.find({ id_category: categoryId }).toArray()
+    return products.map(product => MongoHelper.map(product))
+  }
 }

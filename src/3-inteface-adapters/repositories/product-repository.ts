@@ -16,4 +16,20 @@ export class ProductRepositoryImpl implements ProductRepository {
   async getProductById (id: string): Promise<Product | null> {
     return await this.productMongoRepository.getProductById(id)
   }
+
+  async getAllProducts (): Promise<Product[]> {
+    return await this.productMongoRepository.getAllProducts()
+  }
+
+  async updateProduct (id: string, product: Product): Promise<void> {
+    await this.productMongoRepository.updateProduct(id, product)
+  }
+
+  async deleteProduct (id: string): Promise<void> {
+    await this.productMongoRepository.deleteProduct(id)
+  }
+
+  // async getProductsByCategory (categoryId: string): Promise<Product[]> {
+  //   return await this.productMongoRepository.getProductsByCategory(categoryId)
+  // }
 }

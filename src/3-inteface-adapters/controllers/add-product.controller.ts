@@ -1,19 +1,20 @@
 import { type AddProductUseCase } from '../../2-application/usecases/add-product.usecase'
 import { type Product } from '../../1-entities/product.entity'
 import { type Controller } from './interface/controller.interface'
-import { type HttpRequest, type HttpResponse } from './interface/http.interface'
+import { type HttpResponse } from './interface/http.interface'
 import { badRequest, ok } from '../helpers/http.helpers'
+import { type Request, type Response } from 'express'
 
 export class AddProductController implements Controller {
   constructor (private readonly addProductUseCase: AddProductUseCase) {}
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (req: Request, res: Response): Promise<HttpResponse> {
     try {
       console.log('[1] - controller recebe request')
-      if (!httpRequest.body) {
+      if (!req.body) {
         throw new Error('Corpo da requisição não definido')
       }
-      const { name, description, price, id_category, url_img } = httpRequest.body
+      const { name, description, price, id_category, url_img } = req.body
       if (!name || !description || !price || !id_category || !url_img) {
         throw new Error('Todos os campos são obrigatórios')
       }

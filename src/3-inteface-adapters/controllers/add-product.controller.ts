@@ -2,7 +2,7 @@ import { type AddProductUseCase } from '../../2-application/usecases/add-product
 import { type Product } from '../../1-entities/product.entity'
 import { type Controller } from './interface/controller.interface'
 import { type HttpResponse } from './interface/http.interface'
-import { badRequest, ok } from '../helpers/http.helpers'
+import { badRequest, ok } from './helpers/http.helpers'
 import { type Request, type Response } from 'express'
 
 export class AddProductController implements Controller {

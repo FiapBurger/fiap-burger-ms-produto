@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-initdb-configmap
+  namespace: ms-fiapburger-produto
+data:
+  initdb.js: |
+    db = db.getSiblingDB('produto-mongo-db');
+
+    db.createCollection('produtos');
+    db.produtos.insertMany([
+        { "id": "48de37ee-a8aa-4455-baca-bc4a87205a5a", "name": "Hamburguer", "description": "Pao, alface, molho, queijo", "url_img": "path/hamburguer.png", "price": "10", "id_category": "1" },
+        { "id": "58de37ee-1233-4455-baca-bc4a87205a23", "name": "Coca-cola", "description": "Sem acucar", "url_img": "path/coca.png", "price": "5", "id_category": "2" },
+        { "id": "29de37ee-1233-4455-baca-bc4a87205a44", "name": "Batata frita", "description": "", "url_img": "path/batata.png", "price": "7", "id_category": "3" }
+    ]);

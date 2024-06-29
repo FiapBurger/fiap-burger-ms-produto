@@ -1,4 +1,4 @@
-name: Deploy to EKS
+name: Deploy to Production
 
 on:
   push:
@@ -6,36 +6,60 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: us-east-1
+          node-version: '14.17'
 
-      - name: Install kubectl
-        run: |
-          sudo apt-get update && sudo apt-get install -y kubectl 
+      - name: Install dependencies
+        run: npm install
 
-      - name: Configure kubeconfig for EKS cluster
+      - name: Run linting and tests
         run: |
-          aws eks update-kubeconfig --name fiap-burger-eks-cluster --region us-east-1
+          npm run lint  # Adjust to your linting script
+          npm test
 
-      - name: Deploy resources
+      - name: Build project
+        run: npm run build  # Adjust to your build script if necessary
+
+      - name: Build Docker image
         run: |
-          kubectl apply -f kubernetes/constantes.configmap.yaml
-          kubectl apply -f kubernetes/postgres-sql.configmap.yaml
-          kubectl apply -f kubernetes/db-login.secrets.yaml
-          kubectl apply -f kubernetes/fiap-burger.svc.yaml
-          kubectl apply -f kubernetes/postgres.svc.yaml
-          kubectl apply -f kubernetes/postgres.deployment.yaml
-          kubectl apply -f kubernetes/fiap-burger.deployment.yaml
-          kubectl apply -f kubernetes/fiap-burger.hpa.yaml
+          docker build -t alexcesarnascimento/ms-produto:${{ github.sha }} .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker image to Docker Hub
+        run: | 
+          docker push alexcesarnascimento/ms-produto:${{ github.sha }}
+
+      - name: Update Deployment with New Docker Image
+        run: |
+          sed -i 's|alexcesarnascimento/ms-produto:.*|alexcesarnascimento/ms-produto:${{ github.sha }}|' kubernetes/ms-produto.deployment.yaml
+
+      - name: Clean up old resources
+        run: |
+          kubectl delete namespace ms-fiapburger-produto
+        continue-on-error: true
+
+      - name: Deploy to Kubernetes/EKS
+        run: |
+          kubectl apply -f kubernetes/configmap.yaml
+          kubectl apply -f kubernetes/secrets.yaml
+          kubectl apply -f kubernetes/service.yaml
+          kubectl apply -f kubernetes/deployment.yaml
+          kubectl apply -f kubernetes/hpa.yaml
+
+      - name: Notify deployment success
+        run: echo "Deployment successful!"
+

@@ -1,7 +1,7 @@
 import { type Request } from 'express'
 import { type GetProductByIdUseCase } from '../../2-application/usecases/get-product-by-id.usecase'
 import { type Controller } from './interface/controller.interface'
-import { badRequest, ok } from '../helpers/http.helpers'
+import { badRequest, ok } from './helpers/http.helpers'
 import { type HttpResponse } from './interface/http.interface'
 
 export class GetProductByIdController implements Controller {

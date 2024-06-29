@@ -1,7 +1,7 @@
 import { type GetProductsByCategoryUseCase } from '../../2-application/usecases/get-products-by-category-id.usecase'
 import { type Controller } from './interface/controller.interface'
 import { type HttpResponse } from './interface/http.interface'
-import { badRequest, ok } from '../helpers/http.helpers'
+import { badRequest, ok } from './helpers/http.helpers'
 import { type Request, type Response } from 'express'
 
 export class GetProductsByCategoryController implements Controller {

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo-deployment
+  namespace: ms-fiapburger-produto
   labels:
     app: mongo
 spec:
@@ -14,6 +15,13 @@ spec:
       labels:
         app: mongo
     spec:
+      initContainers:
+        - name: init-mongo
+          image: mongo:4.0.3
+          command: ['sh', '-c', 'mongo < /docker-entrypoint-initdb.d/initdb.js']
+          volumeMounts:
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
       containers:
         - name: mongo
           image: mongo:4.0.3
@@ -26,3 +34,13 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "400m"
+          volumeMounts:
+            - name: mongo-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+        - name: initdb
+          configMap:
+            name: mongo-initdb-configmap

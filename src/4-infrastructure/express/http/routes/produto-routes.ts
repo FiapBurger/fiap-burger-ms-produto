@@ -7,7 +7,7 @@ import {
   makeUpdateProductController,
   makeDeleteProductController,
   makeGetProductsByCategoryController
-} from '../../../../3-inteface-adapters/factories'
+} from './factories'
 
 export default (router: Router): void => {
   router.post('/produtos', adaptRoute(makeAddProductController()))

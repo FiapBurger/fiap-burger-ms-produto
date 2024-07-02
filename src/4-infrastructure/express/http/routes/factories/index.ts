@@ -1,0 +1,6 @@
+export * from './get-product.factory'
+export * from './add-product.factory'
+export * from './get-all-products.factory'
+export * from './delete-product.factory'
+export * from './update-product.factory'
+export * from './get-products-by-category-id.factory'

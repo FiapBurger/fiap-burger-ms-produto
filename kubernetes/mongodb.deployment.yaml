@@ -31,9 +31,11 @@ spec:
             requests:
               memory: "128Mi"
               cpu: "200m"
+              ephemeral-storage: "500Mi"  # Adicionado requests para armazenamento
             limits:
               memory: "256Mi"
               cpu: "400m"
+              ephemeral-storage: "1Gi"  # Adicionado limits para armazenamento
           volumeMounts:
             - name: mongo-storage
               mountPath: /data/db

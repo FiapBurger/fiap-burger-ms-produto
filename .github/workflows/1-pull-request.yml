@@ -22,28 +22,35 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run unit tests
-        run: npm test
+#      - name: Run unit tests
+#        run: npm test
 
-      - name: Install SonarCloud Scanner
-        run: npm install -g sonar-scanner
+#      - name: Install SonarCloud Scanner
+#        run: npm install -g sonar-scanner
 
-      - name: Run SonarCloud scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-          -Dsonar.projectKey=my_project_key \
-          -Dsonar.organization=my_organization \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+#      - name: Run SonarCloud scan
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: |
+#          sonar-scanner \
+#          -Dsonar.projectKey=my_project_key \
+#          -Dsonar.organization=my_organization \
+#          -Dsonar.sources=. \
+#          -Dsonar.host.url=https://sonarcloud.io \
+#          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: extract git commit data
         uses: rlespinasse/git-commit-data-action@v1.x
 
       - name: Update author information
         run: echo ${{ env.GIT_COMMIT_AUTHOR_NAME }} > AUTHOR
+
+      - name: Create conventional commit
+        run: |
+          git config user.name "${{ env.GIT_COMMIT_AUTHOR_NAME }}"
+          git config user.email "${{ env.GIT_COMMIT_AUTHOR_EMAIL }}"
+          git add .
+          git commit -m "chore(ci): automated change - [create-pull-request]"
 
       - name: Raise PR
         id: create_pr

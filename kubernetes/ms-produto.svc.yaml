@@ -4,11 +4,10 @@ metadata:
   name: fiap-burger-api-svc
   namespace: ms-fiapburger-produto
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 5050
       targetPort: 5050
-      nodePort: 31000
   selector:
     app: mf-produto

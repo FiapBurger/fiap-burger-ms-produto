@@ -21,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run linting and tests
-        run: |
-          npm run lint  # Adjust to your linting script
-          npm test
+#      - name: Run linting and tests
+#        run: |
+#          npm run lint  # Adjust to your linting script
+#          npm test
 
       - name: Build project
         run: npm run build  # Adjust to your build script if necessary

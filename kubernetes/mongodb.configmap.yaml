@@ -6,7 +6,6 @@ metadata:
 data:
   initdb.js: |
     db = db.getSiblingDB('produto-mongo-db');
-
     db.createCollection('produtos');
     db.produtos.insertMany([
         { "id": "48de37ee-a8aa-4455-baca-bc4a87205a5a", "name": "Hamburguer", "description": "Pao, alface, molho, queijo", "url_img": "path/hamburguer.png", "price": "10", "id_category": "1" },

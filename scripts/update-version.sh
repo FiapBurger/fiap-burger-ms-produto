@@ -27,5 +27,6 @@ echo "version=$NEXT_VERSION" >> $GITHUB_ENV
 # Tag the new version
 git tag -a "$NEXT_VERSION" -m "Release version $NEXT_VERSION"
 
-# Push the new tag to the remote repository
+# Authenticate using the PAT and push the new tag
+git remote set-url origin https://$PERSONAL_ACCESS_TOKEN@github.com/FiapBurger/fiap-burger-ms-produto.git
 git push origin "$NEXT_VERSION"

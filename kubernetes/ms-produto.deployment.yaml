@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mf-produto-deployment
+  name: ms-produto-deployment
   namespace: ms-fiapburger-produto
   labels:
-    app: mf-produto-deployment
+    app: ms-produto-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mf-produto
+      app: ms-produto
   template:
     metadata:
       labels:
-        app: mf-produto
+        app: ms-produto
     spec:
       containers:
-        - name: mf-produto
+        - name: ms-produto
           image: alexcesarnascimento/ms-produto:0.0.1
           command: ["npm", "start"]
           resources:

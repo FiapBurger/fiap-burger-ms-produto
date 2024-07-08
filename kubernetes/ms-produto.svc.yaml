@@ -10,5 +10,5 @@ spec:
       port: 5050
       targetPort: 5050
   selector:
-    app: mf-produto
+    app: ms-produto
 

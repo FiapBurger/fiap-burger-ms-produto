@@ -23,7 +23,7 @@ jobs:
 
       #     - name: Run linting and tests
       #       run: |
-      #         npm run lint  # Adjust to your linting script
+      #         npm run lint  # Adjust to your linting scripts
       #         npm test
 
       - name: Build project

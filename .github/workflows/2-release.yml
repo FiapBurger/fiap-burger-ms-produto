@@ -42,6 +42,8 @@ jobs:
         run: |
           git config --global user.email "fiapburger.tech@gmail.com"
           git config --global user.name "FiapBurger"
+          git checkout main
+          git pull origin main
           git checkout -b update-version-${{ env.version }}
           git add VERSION
           git commit -m "chore: increment version to ${{ env.version }}"
@@ -91,14 +93,3 @@ jobs:
           aws eks update-kubeconfig --name cluster-fiap --region us-east-1
 
       - name: Deploy to Kubernetes/EKS
-        run: |
-          sed -i 's|alexcesarnascimento/ms-produto:.*|alexcesarnascimento/ms-produto:${{ env.version }}|' kubernetes/ms-produto.deployment.yaml
-          kubectl apply -f kubernetes/ms-produto.namespace.yaml
-          kubectl apply -f kubernetes/mongodb.configmap.yaml
-          kubectl apply -f kubernetes/mongodb.secret.yaml
-          kubectl apply -f kubernetes/ms-produto.svc.yaml
-          kubectl apply -f kubernetes/ms-produto.deployment.yaml
-          kubectl apply -f kubernetes/mongodb.deployment.yaml
-
-      - name: Notify deployment success
-        run: echo "Deployment successful!"

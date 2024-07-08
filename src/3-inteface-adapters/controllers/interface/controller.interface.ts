@@ -1,5 +1,6 @@
-import { type HttpRequest, type HttpResponse } from './http.interface'
+import { type HttpResponse } from './http.interface'
+import { type Request } from 'express'
 
 export interface Controller {
-  handle: (httpRequest: HttpRequest) => Promise<HttpResponse>
+  handle: (req: Request) => Promise<HttpResponse>
 }

@@ -1,7 +1,5 @@
-export interface IProductInput {
-  name: string
-  price: string
-  id_category: string
-  url_img: string
-  description?: string
+import { type Product } from '../../../1-entities/product.entity'
+
+export interface AddProductUseCase {
+  execute: (product: Product) => Promise<void>
 }

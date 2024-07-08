@@ -47,6 +47,18 @@ jobs:
         run: |
           sed -i 's|alexcesarnascimento/ms-produto:.*|alexcesarnascimento/ms-produto:${{ github.sha }}|' kubernetes/ms-produto.deployment.yaml
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+      - name: Install kubectl
+        run: |
+          sudo apt-get update && sudo apt-get install -y kubectl 
+
       - name: Clean up old resources
         run: |
           kubectl delete namespace ms-fiapburger-produto

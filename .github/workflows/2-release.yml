@@ -29,19 +29,11 @@ jobs:
       - name: Build project
         run: npm run build  # Certifique-se de que este comando está correto para o seu projeto
 
-      - name: Calculate next version
+      - name: Update version
         id: version
         run: |
-          git fetch --tags
-          CURRENT_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)
-          if [ -z "$CURRENT_VERSION" ]; then
-            NEXT_VERSION="0.0.1"
-          else
-            NEXT_VERSION=$(npx semver "$CURRENT_VERSION" -i patch)
-          fi
-          echo "Current version: $CURRENT_VERSION"
-          echo "Next version: $NEXT_VERSION"
-          echo "::set-output name=version::$NEXT_VERSION"
+          chmod +x scripts/update-version.sh
+          ./scripts/update-version.sh
 
       - name: Build Docker image
         run: |
@@ -56,13 +48,6 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push alexcesarnascimento/ms-produto:${{ steps.version.outputs.version }}
-
-      - name: Tag new version in Git
-        run: |
-          git config --global user.email "fiapburger.tech@gmail.com"
-          git config --global user.name "FiapBurger"
-          git tag -a "${{ steps.version.outputs.version }}" -m "Release version ${{ steps.version.outputs.version }}"
-          git push origin "${{ steps.version.outputs.version }}"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2

@@ -25,19 +25,19 @@ jobs:
 #      - name: Run unit tests
 #        run: npm test
 
-      - name: Install SonarCloud Scanner
-        run: npm install -g sonar-scanner
+#      - name: Install SonarCloud Scanner
+#        run: npm install -g sonar-scanner
 
-      - name: Run SonarCloud scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-          -Dsonar.projectKey=my_project_key \
-          -Dsonar.organization=my_organization \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+#      - name: Run SonarCloud scan
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: |
+#          sonar-scanner \
+#          -Dsonar.projectKey=my_project_key \
+#          -Dsonar.organization=my_organization \
+#          -Dsonar.sources=. \
+#          -Dsonar.host.url=https://sonarcloud.io \
+#          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: extract git commit data
         uses: rlespinasse/git-commit-data-action@v1.x

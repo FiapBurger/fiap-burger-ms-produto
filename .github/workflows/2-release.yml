@@ -21,17 +21,27 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      #      - name: Run linting and tests
-      #        run: |
-      #          npm run lint  # Adjust to your linting script
-      #          npm test
+#     - name: Run linting and tests
+#       run: |
+#         npm run lint  # Adjust to your linting script
+#         npm test
 
-      - name: Build project
-        run: npm run build  # Adjust to your build script if necessary
+      - name: Calculate next version
+        id: version
+        run: |
+          git fetch --tags
+          CURRENT_VERSION=$(git tag --sort=-v:refname | head -n 1)
+          if [ -z "$CURRENT_VERSION" ]; then
+            NEXT_VERSION="0.0.1"
+          else
+            NEXT_VERSION=$(npx semver $CURRENT_VERSION -i patch)
+          fi
+          echo "Next version: $NEXT_VERSION"
+          echo "::set-output name=version::$NEXT_VERSION"
 
       - name: Build Docker image
         run: |
-          docker build -t alexcesarnascimento/ms-produto:${{ github.sha }} .
+          docker build -t alexcesarnascimento/ms-produto:${{ steps.version.outputs.version }} .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -41,11 +51,7 @@ jobs:
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push alexcesarnascimento/ms-produto:${{ github.sha }}
-
-      - name: Update Deployment with New Docker Image
-        run: |
-          sed -i 's|alexcesarnascimento/ms-produto:.*|alexcesarnascimento/ms-produto:${{ github.sha }}|' kubernetes/ms-produto.deployment.yaml
+          docker push alexcesarnascimento/ms-produto:${{ steps.version.outputs.version }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -73,6 +79,7 @@ jobs:
 
       - name: Deploy to Kubernetes/EKS
         run: |
+          sed -i 's|alexcesarnascimento/ms-produto:.*|alexcesarnascimento/ms-produto:${{ steps.version.outputs.version }}|' kubernetes/ms-produto.deployment.yaml
           kubectl apply -f kubernetes/ms-produto.namespace.yaml
           kubectl apply -f kubernetes/mongodb.configmap.yaml
           kubectl apply -f kubernetes/mongodb.secret.yaml

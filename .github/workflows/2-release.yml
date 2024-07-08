@@ -45,9 +45,19 @@ jobs:
         run: |
           git config --global user.email "fiapburger.tech@gmail.com"
           git config --global user.name "FiapBurger"
+          git checkout -b update-version-${{ env.version }}
           git add VERSION
           git commit -m "chore: increment version to ${{ env.version }}"
-          git push origin main
+          git push origin update-version-${{ env.version }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: increment version to ${{ env.version }}"
+          branch: update-version-${{ env.version }}
+          title: "chore: increment version to ${{ env.version }}"
+          body: "This PR increments the version to ${{ env.version }}."
 
       - name: Build project
         run: npm run build  # Certifique-se de que este comando está correto para o seu projeto

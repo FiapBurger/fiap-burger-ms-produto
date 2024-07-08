@@ -73,11 +73,15 @@ jobs:
 
       - name: Deploy to Kubernetes/EKS
         run: |
-          kubectl apply -f kubernetes/configmap.yaml
-          kubectl apply -f kubernetes/secrets.yaml
-          kubectl apply -f kubernetes/service.yaml
-          kubectl apply -f kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/hpa.yaml
+          kubectl apply -f kubernetes/ms-produto.namespace.yaml
+          kubectl apply -f kubernetes/mongodb.configmap.yaml
+          kubectl apply -f kubernetes/mongodb.secret.yaml
+          kubectl apply -f kubernetes/mongodb.pv.yaml
+          kubectl apply -f kubernetes/mongodb.pvc.yaml
+          kubectl apply -f kubernetes/mongodb.svc.yaml
+          kubectl apply -f kubernetes/ms-produto.svc.yaml
+          kubectl apply -f kubernetes/mongodb.deployment.yaml
+          kubectl apply -f kubernetes/ms-produto.deployment.yaml
 
       - name: Notify deployment success
         run: echo "Deployment successful!"

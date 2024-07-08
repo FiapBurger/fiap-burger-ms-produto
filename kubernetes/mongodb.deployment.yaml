@@ -31,18 +31,12 @@ spec:
             requests:
               memory: "128Mi"
               cpu: "200m"
-              ephemeral-storage: "500Mi"  # Adicionado requests para armazenamento
+              ephemeral-storage: "500Mi"
             limits:
               memory: "256Mi"
               cpu: "400m"
-              ephemeral-storage: "1Gi"  # Adicionado limits para armazenamento
-          volumeMounts:
-            - name: mongo-storage
-              mountPath: /data/db
+              ephemeral-storage: "1Gi"
       volumes:
-        - name: mongo-storage
-          persistentVolumeClaim:
-            claimName: mongo-pvc
         - name: initdb
           configMap:
             name: mongo-initdb-configmap

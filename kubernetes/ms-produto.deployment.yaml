@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: mf-produto
-          image: alexcesarnascimento/mf-produto:0.0.1
+          image: alexcesarnascimento/ms-produto:0.0.1
           command: ["npm", "start"]
           resources:
             requests:

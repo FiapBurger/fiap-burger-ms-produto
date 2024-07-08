@@ -43,10 +43,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
+          git config --global user.email "fiapburger.tech@gmail.com"
+          git config --global user.name "FiapBurger"
           git add VERSION
-          git commit -m "Increment version to ${{ env.version }}"
+          git commit -m "chore: increment version to ${{ env.version }}"
           git push origin main
 
       - name: Build project

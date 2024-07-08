@@ -18,7 +18,13 @@ spec:
       initContainers:
         - name: init-mongo
           image: mongo:4.0.3
-          command: ['sh', '-c', 'mongo < /docker-entrypoint-initdb.d/initdb.js']
+          command: ['sh', '-c', 'mongo ${MONGO_URL} < /docker-entrypoint-initdb.d/initdb.js']
+          env:
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-url
           volumeMounts:
             - name: initdb
               mountPath: /docker-entrypoint-initdb.d
@@ -27,6 +33,12 @@ spec:
           image: mongo:4.0.3
           ports:
             - containerPort: 27017
+          env:
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-url
           resources:
             requests:
               memory: "128Mi"

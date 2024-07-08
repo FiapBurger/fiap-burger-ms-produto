@@ -1,8 +1,8 @@
-import { type DeleteProductUseCase } from '../../2-application/usecases/delete-product.usecase'
-import { type Controller } from './interface/controller.interface'
-import { badRequest, ok } from './helpers/http.helpers'
 import { type Request } from 'express'
+import { type DeleteProductUseCase } from '../../2-application/ports/input/delete-product-usecase.interface'
+import { type Controller } from './interface/controller.interface'
 import { type HttpResponse } from './interface/http.interface'
+import { badRequest, ok } from './helpers/http.helpers'
 
 export class DeleteProductController implements Controller {
   constructor (private readonly deleteProductUseCase: DeleteProductUseCase) {}

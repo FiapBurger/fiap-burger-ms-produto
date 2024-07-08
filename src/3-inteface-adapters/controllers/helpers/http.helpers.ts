@@ -2,7 +2,7 @@ import { type HttpResponse } from '../interface/http.interface'
 
 export const badRequest = (error?: Error): HttpResponse => ({
   statusCode: 400,
-  body: new Error()
+  body: error
 })
 
 export const forbidden = (error: Error): HttpResponse => ({

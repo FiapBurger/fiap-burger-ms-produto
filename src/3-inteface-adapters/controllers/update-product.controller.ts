@@ -1,8 +1,8 @@
-import { type UpdateProductUseCase } from '../../2-application/usecases/update-product.usecase'
+import { type Request } from 'express'
+import { type UpdateProductUseCase } from '../../2-application/ports/input/update-product-usecase.interface'
 import { type Controller } from './interface/controller.interface'
 import { type HttpResponse } from './interface/http.interface'
 import { badRequest, ok } from './helpers/http.helpers'
-import { type Request } from 'express'
 
 export class UpdateProductController implements Controller {
   constructor (private readonly updateProductUseCase: UpdateProductUseCase) {}

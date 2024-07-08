@@ -11,3 +11,4 @@ spec:
       targetPort: 5050
   selector:
     app: mf-produto
+

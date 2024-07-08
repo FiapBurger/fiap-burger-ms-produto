@@ -21,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-#      - name: Run linting and tests
-#        run: |
-#          npm run lint  # Adjust to your linting script
-#          npm test
+      #      - name: Run linting and tests
+      #        run: |
+      #          npm run lint  # Adjust to your linting script
+      #          npm test
 
       - name: Build project
         run: npm run build  # Adjust to your build script if necessary
@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker image to Docker Hub
-        run: | 
+        run: |
           docker push alexcesarnascimento/ms-produto:${{ github.sha }}
 
       - name: Update Deployment with New Docker Image
@@ -57,12 +57,19 @@ jobs:
 
       - name: Install kubectl
         run: |
-          sudo apt-get update && sudo apt-get install -y kubectl 
+          sudo apt-get update && sudo apt-get install -y kubectl
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --name cluster-fiap --region us-east-1
 
       - name: Clean up old resources
         run: |
-          kubectl delete namespace ms-fiapburger-produto
-        continue-on-error: true
+          if kubectl get namespace ms-fiapburger-produto; then
+            kubectl delete namespace ms-fiapburger-produto
+          else
+            echo "Namespace ms-fiapburger-produto does not exist. Skipping deletion."
+          fi
 
       - name: Deploy to Kubernetes/EKS
         run: |
@@ -74,4 +81,3 @@ jobs:
 
       - name: Notify deployment success
         run: echo "Deployment successful!"
-

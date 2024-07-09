@@ -21,19 +21,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      #     - name: Run linting and tests
-      #       run: |
-      #         npm run lint  # Adjust to your linting script
-      #         npm test
-
       - name: Build project
-        run: npm run build  # Certifique-se de que este comando está correto para o seu projeto
+        run: npm run build
 
       - name: Semantic Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run release
+          GITHUB_TOKEN: ${{ secrets.PAT }}  # Use o Personal Access Token (PAT)
+        run: npx semantic-release
 
       - name: Get version from package.json
         id: get_version

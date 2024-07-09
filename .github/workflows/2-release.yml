@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14.17.3'
+          node-version: '14.17'
 
       - name: Install dependencies
         run: npm install
@@ -27,18 +27,7 @@ jobs:
       #     npm test
 
       - name: Build project
-        run: npm run build  # Certifique-se de que este comando está correto para o seu projeto
-
-      - name: Set GitHub Credentials
-        run: |
-          git config --global user.email "fiapburger.tech@gmail.com"
-          git config --global user.name "FiapBurger"
-          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/FiapBurger/fiap-burger-ms-produto.git
-
-      - name: Semantic Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}  # Use o Personal Access Token (PAT)
-        run: npx semantic-release
+        run: npm run build
 
       - name: Get version from package.json
         id: get_version

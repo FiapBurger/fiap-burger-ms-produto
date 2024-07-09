@@ -14,8 +14,6 @@ services:
     image: api-produto-node
     restart: always
     command: npm start
-#    volumes:
-#      - ./dist/:/usr/src/fiap-burger-ms-produto/dist/
     ports:
       - "5050:5050"
     links:
@@ -26,4 +24,3 @@ services:
     volumes:
       - ./dist/:/usr/src/fiap-burger-ms-produto/dist/
       - ./package.json:/usr/src/fiap-burger-ms-produto/package.json
-

@@ -8,6 +8,7 @@ import {
   makeDeleteProductController,
   makeGetProductsByCategoryController
 } from './factories'
+import { makeHealthCheckController } from './factories/health-check.factory'
 
 export default (router: Router): void => {
   router.post('/produtos', adaptRoute(makeAddProductController()))
@@ -16,4 +17,6 @@ export default (router: Router): void => {
   router.put('/produtos/:id', adaptRoute(makeUpdateProductController()))
   router.delete('/produtos/:id', adaptRoute(makeDeleteProductController()))
   router.get('/produtos/categoria/:id_category', adaptRoute(makeGetProductsByCategoryController()))
+
+  router.get('/health', adaptRoute(makeHealthCheckController()))
 }

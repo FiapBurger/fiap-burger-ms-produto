@@ -1,7 +1,10 @@
-import { type Request, type Response } from 'express'
+import { type Request } from 'express'
+import { type Controller } from './interface/controller.interface'
+import { type HttpResponse } from './interface/http.interface'
+import { ok } from './helpers/http.helpers'
 
-export class HealthCheckController {
-  async handle (req: Request, res: Response): Promise<void> {
-    res.status(200).json({ status: 'UP' })
+export class HealthCheckController implements Controller {
+  async handle (req: Request): Promise<HttpResponse> {
+    return ok('A aplicação está saudavel')
   }
 }

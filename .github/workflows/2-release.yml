@@ -63,6 +63,10 @@ jobs:
         run: |
           aws eks update-kubeconfig --name cluster-fiap --region us-east-1
 
+      - name: Delete existing namespace if it exists
+        run: |
+          kubectl get namespace ms-fiapburger-produto && kubectl delete namespace <namespace-name> || echo "Namespace does not exist"
+
       - name: Deploy to Kubernetes/EKS
         run: |
           sed -i 's|alexcesarnascimento/ms-produto:.*|alexcesarnascimento/ms-produto:${{ steps.get_version.outputs.version }}|' kubernetes/ms-produto.deployment.yaml

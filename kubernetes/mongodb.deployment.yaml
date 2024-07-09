@@ -18,7 +18,7 @@ spec:
       initContainers:
         - name: init-mongo
           image: mongo:4.0.3
-          command: ['sh', '-c', 'mongo ${MONGO_URL} < /docker-entrypoint-initdb.d/initdb.js']
+          command: ['sh', '-c', 'until mongo ${MONGO_URL} --eval "db.stats()" >/dev/null 2>&1; do echo "Waiting for MongoDB..."; sleep 5; done; mongo ${MONGO_URL} < /docker-entrypoint-initdb.d/initdb.js']
           env:
             - name: MONGO_URL
               valueFrom:

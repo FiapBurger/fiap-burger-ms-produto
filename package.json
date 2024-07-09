@@ -1,6 +1,6 @@
 {
   "name": "fiap-burger-ms-produto",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Uma API de microsserviço para gerenciar o catálogo de produtos com operações CRUD.",
   "main": "index.js",
   "scripts": {

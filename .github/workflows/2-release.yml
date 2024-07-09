@@ -65,7 +65,11 @@ jobs:
 
       - name: Delete existing namespace if it exists
         run: |
-          kubectl get namespace ms-fiapburger-produto && kubectl delete namespace <namespace-name> || echo "Namespace does not exist"
+          if kubectl get namespace ms-fiapburger-produto; then
+            kubectl delete namespace ms-fiapburger-produto;
+          else
+            echo "Namespace does not exist";
+          fi
 
       - name: Deploy to Kubernetes/EKS
         run: |

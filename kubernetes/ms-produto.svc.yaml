@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: fiap-burger-api-svc
   namespace: ms-fiapburger-produto
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-target-group-arn: "arn:aws:elasticloadbalancing:us-east-1:643230847802:targetgroup/produtos-fiap-burger-tg/6c8e95d306dbc402"
 spec:
   type: LoadBalancer
   ports:

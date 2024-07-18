@@ -6,11 +6,12 @@ metadata:
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
     service.beta.kubernetes.io/aws-load-balancer-target-group-arn: "arn:aws:elasticloadbalancing:us-east-1:643230847802:targetgroup/produtos-fiap-burger-tg/cf5289b1efa0f279"
+    service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: "stickiness.enabled=false,deregistration_delay.timeout_seconds=300"
 spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 5050
-      targetPort: 5050
+      port: 80  
+      targetPort: 5050 
   selector:
     app: ms-produto

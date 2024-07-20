@@ -18,5 +18,5 @@ export default (router: Router): void => {
   router.delete('/produtos/:id', adaptRoute(makeDeleteProductController()))
   router.get('/produtos/categoria/:id_category', adaptRoute(makeGetProductsByCategoryController()))
 
-  router.get('/health', adaptRoute(makeHealthCheckController()))
+  router.get('/produtos/health', adaptRoute(makeHealthCheckController()))
 }
